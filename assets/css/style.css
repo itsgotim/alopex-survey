@@ -1,0 +1,6 @@
+fieldset .survey-label {
+    padding: 20px 20px 20px 5px;
+}
+fieldset .survey-label:not(:last-child) {
+    margin-right: 50px;
+}
