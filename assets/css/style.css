@@ -1,6 +1,31 @@
-fieldset .survey-label {
-    padding: 20px 20px 20px 5px;
+#alosurvey_container {
+    padding: 20px;
+    background-color: lavender;
+    border-radius: 10px;
+    background-image: url(../imgs/sliderbg.jpg);
+    background-size: cover;
+    background-position-y: 100%;
+    transition: background-position-y 0.5s ease-in-out;
+    min-height: 30vh;
+    color: white;
 }
-fieldset .survey-label:not(:last-child) {
+
+.alosurvey_slide {
+    background-color: rgba(0,0,0,.2);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.alosurvey_radio {
+    cursor: pointer;
+}
+
+fieldset .alosurvey_label {
+    padding: 20px 20px 20px 5px;
+    cursor: pointer;
+}
+
+fieldset .alosurvey_label:not(:last-child) {
     margin-right: 50px;
 }
+
