@@ -46,6 +46,7 @@ function alopex_survey_enqueue_script() {
     wp_enqueue_script( 'slick-js', plugin_dir_url( __FILE__ ) . 'assets/slick/slick.js', array( 'jquery' ) );
     wp_enqueue_script( 'survey-js', plugin_dir_url( __FILE__ ) . 'assets/js/survey.js', array( 'slick-js' ) );
     wp_enqueue_style( 'slick-css', plugin_dir_url( __FILE__ ) . 'assets/slick/slick.css' );
+    wp_enqueue_style( 'slick-theme', plugin_dir_url( __FILE__ ) . 'assets/slick/slick-theme.css', array( 'slick-css' ) );
     wp_enqueue_style( 'survey-css', plugin_dir_url( __FILE__ ) . 'assets/css/style.css' );
 }
-add_action('wp_enqueue_scripts', 'alopex_survey_enqueue_script');
+add_action('wp_enqueue_scripts', 'alopex_survey_enqueue_script', 9999);

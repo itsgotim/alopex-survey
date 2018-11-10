@@ -53,7 +53,16 @@ function alopex_survey_shortcode() {
 
             
             $alos_query = new WP_query($args_term);
-            
+            //Search terms to replace from question group descriptions
+            $search = array('%points%', '%points_total%', '%all_points%', '%all_points_total%', '%next%');
+            $replace = array(
+                '<span id="alosurvey_section'.$p.'_points">0</span>', //%points%
+                '',                                     //%points_total%, added in while loop below
+                '<span id="alosurvey_totalp">0</span>', //%all_points%
+                ($alos_query_total->post_count * 5), //%all_points_total%
+                '<button type="button" class="alosurvey_button">Next Section</button>' //%next%
+            );
+
             //Loop through current page of questions
             if($alos_query->have_posts()) {
                 $i = 0;
@@ -63,14 +72,16 @@ function alopex_survey_shortcode() {
                     $pi = $p.'-'.$i;
                     $theoutput .= '<div class="alosurvey_slide"><h4>'.get_the_content().'</h4>'."\n"
                             .'<fieldset id="q'.$p.'-'.$i.'">'."\n"
-                            .'<input type="radio" name="q'.$pi.'" id="alosurvey_always'.$pi.'" class="alosurvey_radio sect'.$p.'" value="' . alopex_survey_get_meta( 'alopex_survey_answer01_points' ) . '"><label class="alosurvey_label" for="alosurvey_always'.$pi.'">' . alopex_survey_get_meta( 'alopex_survey_answer01_name' ) . '</label>'."\n"
-                            .'<input type="radio" name="q'.$pi.'" id="alosurvey_occa'.$pi.'" class="alosurvey_radio sect'.$p.'" value="' . alopex_survey_get_meta( 'alopex_survey_answer02_points' ) . '"><label class="alosurvey_label" for="alosurvey_occa'.$pi.'">' . alopex_survey_get_meta( 'alopex_survey_answer02_name' ) . '</label>'."\n"
-                            .'<input type="radio" name="q'.$pi.'" id="alosurvey_never'.$pi.'" class="alosurvey_radio sect'.$p.'" value="' . alopex_survey_get_meta( 'alopex_survey_answer03_points' ) . '"><label class="alosurvey_label" for="alosurvey_never'.$pi.'">' . alopex_survey_get_meta( 'alopex_survey_answer03_name' ) . '</label>'."\n"
+                            .'<label class="alosurvey_label" for="alosurvey_always'.$pi.'"><input type="radio" name="q'.$pi.'" id="alosurvey_always'.$pi.'" class="alosurvey_radio sect'.$p.'" value="' . alopex_survey_get_meta( 'alopex_survey_answer01_points' ) . '">' . alopex_survey_get_meta( 'alopex_survey_answer01_name' ) . '<span class="checkmark"></span></label>'."\n"
+                            .'<label class="alosurvey_label" for="alosurvey_occa'.$pi.'"><input type="radio" name="q'.$pi.'" id="alosurvey_occa'.$pi.'" class="alosurvey_radio sect'.$p.'" value="' . alopex_survey_get_meta( 'alopex_survey_answer02_points' ) . '">' . alopex_survey_get_meta( 'alopex_survey_answer02_name' ) . '<span class="checkmark"></span></label>'."\n"
+                            .'<label class="alosurvey_label" for="alosurvey_never'.$pi.'"><input type="radio" name="q'.$pi.'" id="alosurvey_never'.$pi.'" class="alosurvey_radio sect'.$p.'" value="' . alopex_survey_get_meta( 'alopex_survey_answer03_points' ) . '">' . alopex_survey_get_meta( 'alopex_survey_answer03_name' ) . '<span class="checkmark"></span></label>'."\n"
                             .'</fieldset></div>'."\n";
                     if ($i == $alos_query->post_count) { //need better logic for tracking section ends............
-                        $theoutput .= '<div class="alosurvey_slide">Hey, you reached the end of this section, go you!<br>'."\n"
-                                .'You scored <span id="alosurvey_section'.$p.'_points">0</span> out of <span id="alosurvey_section1_total">'.($alos_query->post_count * 5).'</span> possible points on this section.<br>'."\n"
-                                .'<button type="button" class="alosurvey_button">Next Section</button></div>'."\n";
+                        $replace[1] = '<span id="alosurvey_section1_total">'.($alos_query->post_count * 5).'</span>';
+                        /*$theoutput .= '<div class="alosurvey_slide"><h3>Hey, you reached the end of this section, go you!</h3>'."\n"
+                                .'<p>You scored <span id="alosurvey_section'.$p.'_points">0</span> out of <span id="alosurvey_section1_total">'.($alos_query->post_count * 5).'</span> possible points on this section.</p>'."\n"
+                                .'<button type="button" class="alosurvey_button">Next Section</button></div>'."\n";*/
+                        $theoutput .= '<div class="alosurvey_slide">'.wpautop(str_replace($search, $replace, $term->description)).'</div>'."\n";
                     }
                 endwhile;
                 wp_reset_postdata();

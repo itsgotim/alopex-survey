@@ -2,13 +2,36 @@ jQuery(document).ready(function(){
     //Initiate slick slider
     jQuery('.slider').slick({
         draggable: false,
-        infinit: false
+        infinit: false,
+        arrows: true,
     });
+
+    //Fade out slider content background, then snap back in
+    jQuery('.slider').on('beforeChange', function(event, slick, currentSlide, nextSlide){
+        jQuery('[data-slick-index="'+currentSlide+'"]').fadeOut('10').fadeIn('0');
+    });
+
+    //Detect first and last slides and hide controls
+    jQuery('.slick-prev').css('display', 'none');
+    jQuery('.slider').on('afterChange', function(event, slick, currentSlide) {
+        //Hide next button if last slide
+        if (slick.$slides.length-1 == currentSlide) {
+            jQuery('.slick-next').css('display', 'none');
+        } else {
+            jQuery('.slick-next').css('display', 'block');
+        }
+        //Hide previou button if first slide
+        if (0 == currentSlide) {
+            console.log('first slide');
+            jQuery('.slick-prev').css('display', 'none');
+        } else {
+            jQuery('.slick-prev').css('display', 'block');
+        }
+    })
     
     //Get page count from hidden form element
     var pages = jQuery("input[name=alos_pagecount").val();
     var total_points = jQuery("input[name=alos_totalpoints").val();
-    console.log(pages);
     
     //Do things when any radio button is clicked
     jQuery("input[type='radio']").change(function() {
@@ -22,10 +45,9 @@ jQuery(document).ready(function(){
                 section_points += parseInt(jQuery(this).val());
             });
             jQuery('#alosurvey_section'+i+'_points').html(section_points);
-            console.log('section'+i);
         }
 
-        //Loop through all radio buttons, regardless of section
+        //Loop through all radio buttons for totals, regardless of section
         var curr_points = 0;
         var curr_questions = 0;
         jQuery(".alosurvey_radio:checked").each(function() {
