@@ -7,7 +7,7 @@
     background-position-y: 100%;
     transition: background-position-y 0.5s ease-in-out;
     -webkit-transition: background-position-y 0.5s ease-in-out;
-    min-height: 30vh;
+    min-height: 500px;
     color: white;
 }
 
@@ -126,6 +126,14 @@
   }
 
 /** Slick Slider **/
+.slick-initialized .slick-track {
+    display: flex;
+    align-items: center;
+    min-height: 100%;
+}
+.slick-list {
+    height: 100%;
+}
 .slick-prev:before, .slick-next:before{
     color: #cccccc;
     font-size: 50px;
