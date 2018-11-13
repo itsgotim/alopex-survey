@@ -30,8 +30,8 @@ jQuery(document).ready(function(){
     })
     
     //Get page count from hidden form element
-    var pages = jQuery("input[name=alos_pagecount").val();
-    var total_points = jQuery("input[name=alos_totalpoints").val();
+    var pages = jQuery("input[name='alos_pagecount']").val();
+    var total_points = jQuery("input[name='alos_totalpoints']").val();
     
     //Do things when any radio button is clicked
     jQuery("input[type='radio']").change(function() {
