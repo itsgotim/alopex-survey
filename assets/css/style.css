@@ -134,7 +134,6 @@
 .slick-list {
     height: 50vh;
 }
-
 .slick-prev:before, .slick-next:before{
     color: #cccccc;
     font-size: 50px;
