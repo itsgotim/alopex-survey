@@ -1,4 +1,4 @@
-#alosurvey_container {
+#ssldr_container {
     padding: 20px;
     background-color: lavender;
     border-radius: 10px;
@@ -6,17 +6,19 @@
     background-size: cover;
     background-position-y: 100%;
     transition: background-position-y 0.5s ease-in-out;
-    min-height: 30vh;
+    -webkit-transition: background-position-y 0.5s ease-in-out;
     color: white;
+    margin-bottom: 2rem;
 }
 
-.alosurvey_slide {
-    background-color: rgba(0,0,0,.2);
+.ssldr_slide {
+    background-color: rgba(0,0,0,.3);
     padding: 20px;
     border-radius: 10px;
     transition: background-color 0.2s ease-in-out;
+    -webkit-transition: background-color 0.2s ease-in-out;
 }
-.alosurvey_slide h4 {
+.ssldr_slide h4 {
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 3rem;
@@ -24,7 +26,7 @@
     word-break: normal;
 }
 
-.alosurvey_slide h3 {
+.ssldr_slide h3 {
     font-size: 1.8rem;
     font-weight: bold;
     margin-bottom: 2rem;
@@ -32,19 +34,19 @@
     word-break: normal;
 }
 
-.alosurvey_slide fieldset {
+.ssldr_slide fieldset {
     border: 0;
 }
 
-.alosurvey_radio {
+.ssldr_radio {
     cursor: pointer;
 }
 
-.alosurvey_label:not(:last-child) {
+.ssldr_label:not(:last-child) {
     margin-right: 50px;
 }
 
-.alosurvey_button {
+.ssldr_button {
     background-color: #00ccff;
     color: white;
     padding: 10px;
@@ -57,7 +59,7 @@
 /** Custom radio buttons **/
 
 /* Customize the label (the container) */
-.alosurvey_label {
+.ssldr_label {
     display: inline-block;
     position: relative;
     padding-left: 40px;
@@ -72,7 +74,7 @@
   }
   
   /* Hide the browser's default radio button */
-  .alosurvey_label input {
+  .ssldr_label input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
@@ -92,12 +94,12 @@
   }
   
   /* On mouse-over, add a grey background color */
-  .alosurvey_label:hover input ~ .checkmark {
+  .ssldr_label:hover input ~ .checkmark {
     background-color: #ccc;
   }
   
   /* When the radio button is checked, add a blue background */
-  .alosurvey_label input:checked ~ .checkmark {
+  .ssldr_label input:checked ~ .checkmark {
     background-color: #2196F3;
   }
   
@@ -109,12 +111,12 @@
   }
   
   /* Show the indicator (dot/circle) when checked */
-  .alosurvey_label input:checked ~ .checkmark:after {
+  .ssldr_label input:checked ~ .checkmark:after {
     display: block;
   }
   
   /* Style the indicator (dot/circle) */
-  .alosurvey_label .checkmark:after {
+  .ssldr_label .checkmark:after {
     top: 10px;
     left: 10px;
     width: 12px;
@@ -124,6 +126,15 @@
   }
 
 /** Slick Slider **/
+.slick-initialized .slick-track {
+    display: flex;
+    align-items: center;
+    min-height: 100%;
+}
+.slick-list {
+    height: 50vh;
+}
+
 .slick-prev:before, .slick-next:before{
     color: #cccccc;
     font-size: 50px;

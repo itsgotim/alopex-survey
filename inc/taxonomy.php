@@ -3,10 +3,10 @@
  */
 
 //Register taxonomy
-function alopex_survey_create_tax() {
+function survey_slider_create_tax() {
 	register_taxonomy(
 		'qgroup',
-		'alopex_survey',
+		'survey_slider',
 		array(
 			'label' => __( 'Group Questions' ),
 			'rewrite' => array( 'slug' => 'qgroup' ),
@@ -14,12 +14,12 @@ function alopex_survey_create_tax() {
 		)
 	);
 }
-add_action( 'init', 'alopex_survey_create_tax' );
+add_action( 'init', 'survey_slider_create_tax' );
 
 //Add custom taxonomy as submenu pages
-function alopex_survey_submenu_pages() {
+function survey_slider_submenu_pages() {
     $categoryType = 'qgroup';
-    $postType = 'alopex_survey';
+    $postType = 'survey_slider';
     $wp_term = get_categories( 'taxonomy='.$categoryType.'&type='.$postType ); 
     if ( $wp_term ) {
         foreach ( $wp_term as $term ) {
@@ -28,4 +28,4 @@ function alopex_survey_submenu_pages() {
         }
     } 
 }
-add_action('admin_menu', 'alopex_survey_submenu_pages');
+add_action('admin_menu', 'survey_slider_submenu_pages');

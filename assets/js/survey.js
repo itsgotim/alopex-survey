@@ -30,8 +30,8 @@ jQuery(document).ready(function(){
     })
     
     //Get page count from hidden form element
-    var pages = jQuery("input[name=alos_pagecount").val();
-    var total_points = jQuery("input[name=alos_totalpoints").val();
+    var pages = jQuery("input[name='ssldr_pagecount']").val();
+    var total_points = jQuery("input[name='ssldr_totalpoints']").val();
     
     //Do things when any radio button is clicked
     jQuery("input[type='radio']").change(function() {
@@ -44,28 +44,28 @@ jQuery(document).ready(function(){
             jQuery('.sect'+i+':checked').each(function() {
                 section_points += parseInt(jQuery(this).val());
             });
-            jQuery('#alosurvey_section'+i+'_points').html(section_points);
+            jQuery('#ssldr_section'+i+'_points').html(section_points);
         }
 
         //Loop through all radio buttons for totals, regardless of section
         var curr_points = 0;
         var curr_questions = 0;
-        jQuery(".alosurvey_radio:checked").each(function() {
+        jQuery(".ssldr_radio:checked").each(function() {
             curr_points = ( curr_points + parseInt(jQuery(this).val()) );
             curr_questions++;
         });
-        jQuery('#alosurvey_totalq').html(curr_questions);
-        jQuery('#alosurvey_totalp').html(curr_points);
+        jQuery('#ssldr_totalq').html(curr_questions);
+        jQuery('#ssldr_totalp').html(curr_points);
 
         //Update background image
         var bgpos = 0;
         bgpos = Math.round((curr_points / total_points) * 100);
-        jQuery('#alosurvey_container').css('background-position-y', (100-bgpos)+'%');
+        jQuery('#ssldr_container').css('background-position-y', (100-bgpos)+'%');
         //console.log('points:'+curr_points + ' total_points:'+total_points+' bgpos:'+bgpos); 
         
     })
 
-    jQuery(".alosurvey_button").click(function() {
+    jQuery(".ssldr_button").click(function() {
         jQuery('.slider').slick('slickNext');
     });
 });

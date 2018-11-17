@@ -2,9 +2,9 @@
  * Register our custom post type for adding questions
  */
 
-function alopex_survey_post_type()
+function survey_slider_post_type()
 {
-    register_post_type('alopex_survey',
+    register_post_type('survey_slider',
                        array(
                            'labels'      => array(
                                'name'          => __('Survey'),
@@ -12,8 +12,8 @@ function alopex_survey_post_type()
                            ),
                            'public'      => true,
                            'has_archive' => true,
-						   'register_meta_box_cb' => 'alopex_survey_add_meta_box',
+						   'register_meta_box_cb' => 'survey_slider_add_meta_box',
                        )
     );
 }
-add_action('init', 'alopex_survey_post_type');
+add_action('init', 'survey_slider_post_type');
