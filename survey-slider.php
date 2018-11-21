@@ -42,6 +42,9 @@ require( plugin_dir_path( __FILE__ ) . 'inc/taxonomy.php' );
 //Create out a shortcode for outputting survey
 require( plugin_dir_path( __FILE__ ) . 'inc/shortcode.php' );
 
+//Create out a shortcode for outputting survey
+require( plugin_dir_path( __FILE__ ) . 'inc/shortcode-paged.php' );
+
 //Enqueue scripts and styles
 function survey_slider_enqueue_script() {   
     wp_enqueue_script( 'slick-js', plugin_dir_url( __FILE__ ) . 'assets/slick/slick.js', array( 'jquery' ) );

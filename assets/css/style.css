@@ -9,6 +9,7 @@
     -webkit-transition: background-position-y 0.5s ease-in-out;
     color: white;
     margin-bottom: 2rem;
+    height: 100%;
 }
 
 .ssldr_slide {

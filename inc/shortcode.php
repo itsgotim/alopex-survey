@@ -1,6 +1,6 @@
 <?php /**
  * Display our questionnaire with a simple shortcode 
- * Usage: [alo_survey]
+ * Usage: [survey_slider]
  *  */
 
 function survey_slider_shortcode() {
