@@ -54,7 +54,7 @@ function survey_slider_shortcode() {
             
             $ssldr_query = new WP_query($args_term);
             //Search terms to replace from question group descriptions
-            $search = array('%all_points%', '%all_points_total%', '%sect1-score', '%sect2-score%', '%sect3-score%', '%score%', '%next%');
+            $search = array('%all_points%', '%all_points_total%', '%sect1-score%', '%sect2-score%', '%sect3-score%', '%score%', '%next%');
             $replace = array(
                 '<span id="ssldr_totalp">0</span>', //%all_points%
                 ($ssldr_query_total->post_count * 5), //%all_points_total%
