@@ -54,12 +54,15 @@ function survey_slider_shortcode() {
             
             $ssldr_query = new WP_query($args_term);
             //Search terms to replace from question group descriptions
-            $search = array('%points%', '%points_total%', '%all_points%', '%all_points_total%', '%next%');
+            $search = array('%all_points%', '%all_points_total%', '%sect1-score', '%sect2-score%', '%sect3-score%', '%score%', '%next%');
             $replace = array(
-                '<span id="ssldr_section'.$p.'_points">0</span>', //%points%
-                '',                                     //%points_total%, added in while loop below
                 '<span id="ssldr_totalp">0</span>', //%all_points%
                 ($ssldr_query_total->post_count * 5), //%all_points_total%
+                '<span class="ssldr_section1_score">0</span>', //section 1 score
+                '<span class="ssldr_section2_score">0</span>', //section 2 score
+                '<span class="ssldr_section3_score">0</span>', //section 3 score
+                '<span class="ssldr_score">0</span>',
+                //percent score
                 '<button type="button" class="ssldr_button">Next Section</button>' //%next%
             );
 
@@ -71,13 +74,13 @@ function survey_slider_shortcode() {
                     //$custom = get_post_custom( get_the_ID() );
                     $pi = $p.'-'.$i;
                     $theoutput .= '<div class="ssldr_slide"><h4>'.get_the_content().'</h4>'."\n"
+                            .'<input type="hidden" name="ssldr_s'.$p.'total" value="'.($ssldr_query->post_count * 5).'">'."\n"
                             .'<fieldset id="q'.$p.'-'.$i.'">'."\n"
                             .'<label class="ssldr_label" for="ssldr_always'.$pi.'"><input type="radio" name="q'.$pi.'" id="ssldr_always'.$pi.'" class="ssldr_radio sect'.$p.'" value="' . survey_slider_get_meta( 'survey_slider_answer01_points' ) . '">' . survey_slider_get_meta( 'survey_slider_answer01_name' ) . '<span class="checkmark"></span></label>'."\n"
                             .'<label class="ssldr_label" for="ssldr_occa'.$pi.'"><input type="radio" name="q'.$pi.'" id="ssldr_occa'.$pi.'" class="ssldr_radio sect'.$p.'" value="' . survey_slider_get_meta( 'survey_slider_answer02_points' ) . '">' . survey_slider_get_meta( 'survey_slider_answer02_name' ) . '<span class="checkmark"></span></label>'."\n"
                             .'<label class="ssldr_label" for="ssldr_never'.$pi.'"><input type="radio" name="q'.$pi.'" id="ssldr_never'.$pi.'" class="ssldr_radio sect'.$p.'" value="' . survey_slider_get_meta( 'survey_slider_answer03_points' ) . '">' . survey_slider_get_meta( 'survey_slider_answer03_name' ) . '<span class="checkmark"></span></label>'."\n"
                             .'</fieldset></div>'."\n";
                     if ($i == $ssldr_query->post_count) { //If end of section, output summary/term description
-                        $replace[1] = '<span id="ssldr_section'.$p.'_total">'.($ssldr_query->post_count * 5).'</span>'; //Populate [1] in our replace function with total points
                         $theoutput .= '<div class="ssldr_slide">'.wpautop(str_replace($search, $replace, $term->description)).'</div>'."\n"; //End of section content
                     }
                 endwhile;

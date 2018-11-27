@@ -133,7 +133,7 @@
     min-height: 100%;
 }
 .slick-list {
-    height: 50vh;
+    /*height: 50vh;*/
 }
 .slick-prev:before, .slick-next:before{
     color: #cccccc;
