@@ -73,7 +73,7 @@ function survey_slider_shortcode() {
                     $i++;
                     //$custom = get_post_custom( get_the_ID() );
                     $pi = $p.'-'.$i;
-                    $theoutput .= '<div class="ssldr_slide"><h4>'.get_the_content().'</h4>'."\n"
+                    $theoutput .= '<div class="ssldr_slide"><h4 class="question">'.get_the_content().'</h4>'."\n"
                             .'<input type="hidden" name="ssldr_s'.$p.'total" value="'.($ssldr_query->post_count * 5).'">'."\n"
                             .'<fieldset id="q'.$p.'-'.$i.'">'."\n"
                             .'<label class="ssldr_label" for="ssldr_always'.$pi.'"><input type="radio" name="q'.$pi.'" id="ssldr_always'.$pi.'" class="ssldr_radio sect'.$p.'" value="' . survey_slider_get_meta( 'survey_slider_answer01_points' ) . '">' . survey_slider_get_meta( 'survey_slider_answer01_name' ) . '<span class="checkmark"></span></label>'."\n"

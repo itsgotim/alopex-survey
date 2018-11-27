@@ -19,18 +19,11 @@
     transition: background-color 0.2s ease-in-out;
     -webkit-transition: background-color 0.2s ease-in-out;
 }
-.ssldr_slide h4 {
+
+.ssldr_slide h4.question {
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 3rem;
-    color: white;
-    word-break: normal;
-}
-
-.ssldr_slide h3 {
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin-bottom: 2rem;
     color: white;
     word-break: normal;
 }
