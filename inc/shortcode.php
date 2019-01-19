@@ -6,14 +6,46 @@
 function survey_slider_shortcode() {
     $theoutput = null;
  
+    //Check for results page and build it out
     if (!empty($_GET['avpd']) && !empty($_GET['mdep']) && !empty($_GET['dep'])) { //Output results page
         $score = floor( ( intval($_GET['avpd']) + intval($_GET['mdep']) + intval($_GET['dep']) ) / 3 );
-        //Build results page
-        //var_dump($_GET); 
-        $theoutput = '<div id="ssldr_container">'."\n"
-                        .'<div class="ssldr_slide" style="text-align:center;">'."\n"
+        $score_verbal = "";
+        $results = ""; //Content to be pulled from page slug "results"
+        
+        //Determine verbal score in quarters
+        switch ($score) {
+            case $score >= 0 && $score <= 25:
+                $score_verbal = "0 to 25% - Your responses are not Consistent with Avpd, Major Depression, or Depression";
+                break;
+            case $score >= 26 && $score <= 50:
+                $score_verbal = "25 to 50% - Your responses are Consistent with Avpd, Major Depression, or Depression";
+                break;
+            case $score >= 51 && $score <= 75:
+                $score_verbal = "50 to 75% - Your responses are Very Consistent with Avpd, Major Depression, or Depression";
+                break;
+            case $score >= 76 && $score <= 100;
+                $score_verbal = "75 to 100%  - Your responses are Highly Consistent with Avpd, Major Depression, or Depression";
+                break;
+            default:
+                $score_verbal = "Your score is outside of normal ranges.";
+        }
+
+        //Grab recommendations page content
+        $results = get_posts( array( 'name' => 'results', 'post_type' => 'page' ));
+        $results = ($results) ? $results[0] : 'Something is wrong with our reocmmendations';
+        
+        $theoutput = //'<div id="ssldr_container" style="height:initial">'."\n"
+                        //.'<div class="ssldr_slide">'."\n"
+                        '<div class="results_container">'."\n"
+                            .'<div style="text-align:center;">'."\n"
                             .'<h1>Quiz Results</h1>'."\n"
-                            .'<p>Quiz results introduction goes here.</p>'."\n"
+                            //Faceboook and Twitter share
+                            .'<div class="ssldr_social">'."\n"
+                                .'<div class="fb-share-button" data-href="' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '" data-layout="button_count"></div>'."\n"
+                                .'<a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=I%20scored%20'.$score.'%25%20on%20the%20Avoidant%20Personality%2C%20Major%20Depression%20and%20Depression%20Quiz.%20Find%20out%20how%20you%20score.">Tweet</a>'."\n"
+                            .'</div>'."\n"
+                            //Actual result
+                            .'<h4>'.$score_verbal.'</h4>'."\n"
                             .'<div class="results">'."\n"
                                 .'<div><h4>Avoidant Personality Disorder</h4>'."\n"
                                 .'<p><span class="score">You Scored: ' . $_GET['avpd'] . '%</span><br>'
@@ -25,13 +57,45 @@ function survey_slider_shortcode() {
                                 .'<p><span class="score">You Scored: ' . $_GET['dep'] . '%</span><br>'
                                 .'Gentle explanation of disorder here.</p></div>'."\n"
                             .'</div>'."\n"
+                            .'<p>We are glad you took a first step by taking this screening. Please remember that these results are not a diagnosis. These results are common and help is available.</p>'."\n"
+                            .'</div>'
+                            .apply_filters('the_content', $results->post_content)
                             //.'<a class="ssldr_button" href="https://www.facebook.com/sharer/sharer.php?u=' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '">Share on Facebook</a>'."\n"
-                            .'<div class="fb-share-button" data-href="' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '" data-layout="button_count"></div>'
-                            .'<a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=I%20scored%20'.$score.'%25%20on%20the%20Avoidant%20Personality%2C%20Major%20Depression%20and%20Depression%20Quiz.%20Find%20out%20how%20you%20score.">Tweet</a>'
-                        .'</div>'."\n"
-                    .'</div>'
+                        .'</div>'
+                        //.'</div>'."\n"
+                    //.'</div>'
                     //Disclaimer
                     .'<p class="ssldr_disclaimer">This test is for evaluation purposes only. We are not Physiatrists, physiologists, or any other licensed professional so we cannot diagnose symptoms. This test is a useful guide that will help you determine if you might have Avoidant Personality, Major Depression, or Depression. Only a licensed professional can officially diagnose you.</p>';
+        return $theoutput;
+    } elseif (!empty($_GET['report'])) { //Output report question form
+        $question = urldecode($_GET['report']);
+        //wp_mail form
+        $theoutput = '<div class="report_question">'
+                        .'<h1>Reporting '.$question.'</h1>'
+                        .'<form action="./" method="post">'
+                            .'<label for="question">Question</label><input type="text" id="question" name="question" value="'.$question.'" readonly="readonly">'
+                            .'<label for="from_name">Your Name</label><input type="text" id="from_name" name="from_name" placeholder="Jane Smith" required>'
+                            .'<label for="from_email">Your E-mail</label><input type="email" id="from_email" name="from_email" placeholder="name@domain.com" required>'
+                            .'<label for="report_msg">Description</label><textarea id="report_msg" name="report_msg" rows="6" cols="50" maxlength="600" placeholder="Describe the issue about the question in 600 characters or less." required></textarea>'
+                            .'<input type="submit" value="Submit" style="float:right;">'
+                        .'</form>'
+                      .'</div>';
+        return $theoutput;
+    } elseif ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['report_msg'])) { //Send report question form
+        $to = 'phillip@avoidants.com';
+        $subject = 'Reported: '.$_POST['question'];
+        $message = $_POST['from_name'].'('.$_POST['from_email'].') reported '.$_POST['question'].' and had this to say: '.$_POST['report_msg'];
+        $headers = 'From: '.$_POST['from_name'].' <'.$_POST['from_email'].'>';
+        $theoutput = '<div class="report_question">'
+                        .'<h1>Reporting '.$_POST['question'].'</h1>'
+                        .'<p>'.htmlentities($headers).'</p>'
+                        .'<p>Your message: '.$_POST['report_msg'].'</p>';
+        if ( wp_mail( $to, $subject, $message, $headers ) ) {
+            $theoutput .= '<span style="color:green;">Your report was sent successfully. You may close this window.</span>';
+        } else {
+            $theoutput .= '<span style="color:red;">Something went wrong, your report was not sent. Please contact phillip@avoidants.com.</span>';
+        }
+        $theoutput .= '</div>';
         return $theoutput;
     } else { //Output quiz
         $ssldr_query_total = null;
@@ -53,8 +117,8 @@ function survey_slider_shortcode() {
 
         //Output total questions and top of form and slider
         if ($ssldr_query_total->have_posts()) {
-            $theoutput = '<p><span class="ssldr_totalq">0</span> of '.$ssldr_query_total->post_count.' total questions.</p>'
-                        .'<div id="progressbar"><div class="progressbar_inner"><span class="ssldr_totalq">0</span> of '.$ssldr_query_total->post_count.'</div></div>'."\n"
+            $theoutput = //'<p><span class="ssldr_totalq">0</span> of '.$ssldr_query_total->post_count.' total questions.</p>'
+                        '<div id="progressbar"><div class="progressbar_inner"><span class="ssldr_totalq">0</span> of '.$ssldr_query_total->post_count.'</div></div>'."\n"
                         //.'<span id="ssldr_totalp">0</span> of '.($ssldr_query_total->post_count * 5).' total points.<br><br>'
                         .'<form action="" method="GET" name="sslder" id="ssldr_form">'."\n"
                         .'<input type="hidden" class="ssldr_pagecount" value="'.wp_count_terms( 'qgroup' ).'">'."\n" //Pass javascript this section's number of sections
@@ -106,7 +170,7 @@ function survey_slider_shortcode() {
                                 .'<label class="ssldr_label" for="ssldr_always'.$pi.'"><input type="radio" id="ssldr_always'.$pi.'" class="ssldr_radio sect'.$p.'" value="' . survey_slider_get_meta( 'survey_slider_answer01_points' ) . '">' . survey_slider_get_meta( 'survey_slider_answer01_name' ) . '<span class="checkmark"></span></label>'."\n"
                                 .'<label class="ssldr_label" for="ssldr_occa'.$pi.'"><input type="radio" id="ssldr_occa'.$pi.'" class="ssldr_radio sect'.$p.'" value="' . survey_slider_get_meta( 'survey_slider_answer02_points' ) . '">' . survey_slider_get_meta( 'survey_slider_answer02_name' ) . '<span class="checkmark"></span></label>'."\n"
                                 .'<label class="ssldr_label" for="ssldr_never'.$pi.'"><input type="radio" id="ssldr_never'.$pi.'" class="ssldr_radio sect'.$p.'" value="' . survey_slider_get_meta( 'survey_slider_answer03_points' ) . '">' . survey_slider_get_meta( 'survey_slider_answer03_name' ) . '<span class="checkmark"></span></label>'."\n"
-                                .'</fieldset><span class="qno">'.get_the_title().'<br><a href="#">Report Question</a></span></div>'."\n";
+                                .'</fieldset><span class="qno">'.get_the_title().'<br><a href="./?report='.urlencode(get_the_title()).'" target="_blank">Report Question</a></div>'."\n";
                     endwhile;
 
                     wp_reset_postdata();

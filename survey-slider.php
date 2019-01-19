@@ -24,7 +24,7 @@ function survey_slider_default_title() {
     global $wpdb;
 
     //Default title: 'Question' + max(ID)
-    $qid = $wpdb->get_var("SELECT max(ID) FROM " . $wpdb->prefix . "posts WHERE post_type = 'survey_slider' ") + 1;
+    $qid = $wpdb->get_var("SELECT COUNT(*) FROM " . $wpdb->prefix . "posts WHERE post_type = 'survey_slider' AND post_status = 'publish'") + 1;
 
     if ('survey_slider' == $post_type) {
         return 'Question ' . $qid;
@@ -42,13 +42,16 @@ require( plugin_dir_path( __FILE__ ) . 'inc/taxonomy.php' );
 //Create out a shortcode for outputting survey
 require( plugin_dir_path( __FILE__ ) . 'inc/shortcode.php' );
 
+//Create out a shortcode for outputting survey
+require( plugin_dir_path( __FILE__ ) . 'inc/shortcode-popup.php' );
+
 //Enqueue scripts and styles
 function survey_slider_enqueue_script() {   
     wp_enqueue_script( 'slick-js', plugin_dir_url( __FILE__ ) . 'assets/slick/slick.js', array( 'jquery' ) );
     wp_enqueue_script( 'survey-js', plugin_dir_url( __FILE__ ) . 'assets/js/survey.js', array( 'slick-js' ) );
     wp_enqueue_style( 'slick-css', plugin_dir_url( __FILE__ ) . 'assets/slick/slick.css' );
     wp_enqueue_style( 'slick-theme', plugin_dir_url( __FILE__ ) . 'assets/slick/slick-theme.css', array( 'slick-css' ) );
-    wp_enqueue_style( 'survey-css', plugin_dir_url( __FILE__ ) . 'assets/css/style.css' );
+    wp_enqueue_style( 'survey-css', plugin_dir_url( __FILE__ ) . 'assets/css/style.css', false, rand(100,999) );
 }
 add_action('wp_enqueue_scripts', 'survey_slider_enqueue_script', 9999);
 

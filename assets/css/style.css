@@ -1,15 +1,17 @@
+/** Survey slider containers **/
 #ssldr_container {
     padding: 20px;
     background-color: lavender;
     border-radius: 10px;
     background-image: url(../imgs/sliderbg.jpg);
     background-size: cover;
+    background-repeat: repeat-y;
     background-position-y: 100%;
     transition: background-position-y 0.5s ease-in-out;
     -webkit-transition: background-position-y 0.5s ease-in-out;
     color: white;
-    margin-bottom: 2rem;
-    height: 100%;
+    margin-bottom: 1rem;
+    height: 80vh;
 }
 
 .ssldr_slide {
@@ -20,6 +22,7 @@
     -webkit-transition: background-color 0.2s ease-in-out;
 }
 
+/** The question **/
 .ssldr_slide h4.question {
     font-size: 1.5rem;
     font-weight: bold;
@@ -28,6 +31,19 @@
     word-break: normal;
 }
 
+/** Question title and report question link .qno **/
+.ssldr_slide span.qno {
+    float: right;
+    font-weight: normal;
+    font-size: 12px;
+    position: relative;
+}
+.qno a {
+    color: white;
+    text-decoration: underline;
+}
+
+/** form controls **/
 .ssldr_slide fieldset {
     border: 0;
 }
@@ -123,7 +139,7 @@
 .slick-initialized .slick-track {
     display: flex;
     align-items: center;
-    min-height: 50vh;
+    min-height: 80vh;
 }
 
 .slick-prev:before, .slick-next:before{
@@ -140,4 +156,118 @@
 }
 .slick-next {
     right: -55px;
+}
+
+/* Progress Bar */
+#progressbar {
+    background-color: #ccc;
+    border-radius: 13px; /* (height of inner div) / 2 + padding */
+    padding: 3px;
+    margin-bottom: 5px;
+}
+  
+#progressbar > div {
+    background-color: #37BC61;
+    width: 0%; /* Adjust with JavaScript */
+    height: 20px;
+    line-height: 20px;
+    border-radius: 10px;
+    transition: width 0.3s ease-in-out;
+}
+.progressbar_inner {
+    color:white;
+    overflow:hidden;
+    text-align:center;
+}
+
+/** Results page **/
+.results_container {
+    padding: 0 20px;
+}
+.results {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.results div {
+    width: 26%;
+    padding: 10px 3%;
+    min-width: 200px;
+    border-left: 1px dashed grey;
+    margin: 0 10px 10px 0;
+    text-align: left;
+}
+
+.score {
+    background-color: rgba(55, 188, 97, 0.5);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+/** Disclaimer **/
+.ssldr_disclaimer {
+    max-width: 60%;
+    font-size: 14px;
+    margin: 0 auto;
+    display: block;
+}
+
+/** Share buttons **/
+.ssldr_social {
+    line-height: 10px;
+    margin-bottom: 20px;
+}
+.fb-share-button {
+    margin-right: 10px;
+}
+/*.twitter-share-button { 
+    vertical-align: middle !important; 
+}*/
+
+/** Popup modal **/
+
+.popup-overlay {
+    /*Hides pop-up when there is no "active" class*/
+    visibility: hidden;
+    position: absolute;
+    background: #ffffff;
+    border-radius: 8px;
+    color: black;
+    border: 3px solid #666666;
+    box-shadow: 6px 6px 12px #333333;
+    z-index:999;
+    width: 75%;
+    left: 12%;
+
+}
+.popup-overlay.active {
+    /*displays pop-up when "active" class is present*/
+    visibility: visible;
+    text-align: center;
+}
+
+button.open, button.close {
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 8px;
+    margin: .20rem;
+    font-size: 1rem;
+    color: #666666;
+    background: #ffffff;
+    border: 1px solid #666666;
+    cursor: pointer;
+    padding: 10px;
+}
+
+button.open:hover, button.close:hover {
+    border: 1px solid #666666;
+    background: #666666;
+    color: #ffffff;
+}
+
+/*Report question form*/
+.report_question {
+    width: 60%;
+    margin: 0 auto;
 }
