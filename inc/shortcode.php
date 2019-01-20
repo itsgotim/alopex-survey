@@ -43,6 +43,7 @@ function survey_slider_shortcode() {
                             .'<div class="ssldr_social">'."\n"
                                 .'<div class="fb-share-button" data-href="' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '" data-layout="button_count"></div>'."\n"
                                 .'<a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=I%20scored%20'.$score.'%25%20on%20the%20Avoidant%20Personality%2C%20Major%20Depression%20and%20Depression%20Quiz.%20Find%20out%20how%20you%20score.">Tweet</a>'."\n"
+                                .'<a href="mailto:?subject=Take%20this%20AVPD%20and%20Depression%20Test&body=I%20scored%20'.$score.'%25%20on%20the%20Avoidant%20Personality%2C%20Major%20Depression%20and%20Depression%20Quiz.%20Find%20out%20how%20you%20score:%20http%3A%2F%2Favoidants.org%2Ftest%2F" class="ssldr_email-button">Email</a>'."\n"
                             .'</div>'."\n"
                             //Actual result
                             .'<h4>'.$score_verbal.'</h4>'."\n"
@@ -73,10 +74,10 @@ function survey_slider_shortcode() {
         $theoutput = '<div class="report_question">'
                         .'<h1>Reporting '.$question.'</h1>'
                         .'<form action="./" method="post">'
-                            .'<label for="question">Question</label><input type="text" id="question" name="question" value="'.$question.'" readonly="readonly">'
-                            .'<label for="from_name">Your Name</label><input type="text" id="from_name" name="from_name" placeholder="Jane Smith" required>'
-                            .'<label for="from_email">Your E-mail</label><input type="email" id="from_email" name="from_email" placeholder="name@domain.com" required>'
-                            .'<label for="report_msg">Description</label><textarea id="report_msg" name="report_msg" rows="6" cols="50" maxlength="600" placeholder="Describe the issue about the question in 600 characters or less." required></textarea>'
+                            .'<label for="question">Question:</label><br><input type="text" id="question" name="question" value="'.$question.'" readonly="readonly"><br>'."\n"
+                            .'<label for="from_name">Your Name:</label><br><input type="text" id="from_name" name="from_name" placeholder="Jane Smith" required><br>'."\n"
+                            .'<label for="from_email">Your E-mail:</label><br><input type="email" id="from_email" name="from_email" placeholder="name@domain.com" required><br>'."\n"
+                            .'<label for="report_msg">Description:</label><br><textarea id="report_msg" name="report_msg" rows="6" cols="50" maxlength="600" placeholder="Describe the issue about the question in 600 characters or less." required></textarea><br>'."\n"
                             .'<input type="submit" value="Submit" style="float:right;">'
                         .'</form>'
                       .'</div>';
